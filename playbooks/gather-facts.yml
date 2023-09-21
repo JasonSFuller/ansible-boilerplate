@@ -1,0 +1,38 @@
+# USAGE:
+#   ansible-playbook -i server.example.com, gather-facts.yml
+#
+# NOTE:
+#   The comma is important when providing a single host as the inventory
+#
+# PURPOSE:
+#   By default, 'gather_facts:' is set to 'true' and causes Ansible to search
+#   a host for common information from the OS.  This provides a CONSISTENT
+#   variable structure that can be referenced, across diverse hosts (RHEL,
+#   Ubuntu, SLES, etc), to make decisions.  Here are a few commonly used ones:
+#
+#     - ansible_facts.all_ipv4_addresses    =>  [ "10.0.0.123", "172.30.0.1" ]
+#     - ansible_facts.architecture          =>  "x86_64"
+#     - ansible_facts.date_time.iso8601     =>  "iso86012018-10-25T12:08:44Z"
+#     - ansible_facts.default_ipv4.address  =>  "10.0.0.123"
+#     - ansible_facts.distribution          =>  "Fedora"
+#     - ansible_facts.distribution_major_version => "36"
+#     - ansible_facts.fqdn                  =>  "server.example.com"
+#     - ansible_facts.memtotal_mb           =>  64018
+#     - ansible_facts.os_family             =>  "RedHat"
+#     - ansible_facts.processor_vcpus       =>  12
+#     - ansible_facts.system                =>  "Linux"
+#     ...
+#
+#   For example, if the target is RHEL 8, the Apache package is called "httpd,"
+#   and you must use that name when installing it.  However, if the target is
+#   Ubuntu 20.04, the package name is "apache."  Using the ansible_facts vars,
+#   you can write a playbook that matches the correct name for the distro.
+
+- name: Gather and display facts from a host
+  hosts: all
+
+  tasks:
+
+    - name: Print all available facts
+      ansible.builtin.debug:
+        var: ansible_facts

@@ -1,0 +1,16 @@
+# USAGE:
+#   ansible-playbook hello-world.yml
+#
+# PURPOSE:
+#   A simple playbook to test your Ansible installation.
+
+- name: Example playbook
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Hello, world!
+      ansible.builtin.debug:
+        msg: Hi!

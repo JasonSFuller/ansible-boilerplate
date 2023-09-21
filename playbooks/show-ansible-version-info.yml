@@ -1,0 +1,102 @@
+# USAGE:
+#   ansible-playbook -i server.example.com, show-ansible-version-info.yml
+#
+# PURPOSE:
+#   Show version info for Python, PIP packages, Ansible, and collection info.
+#   It's useful for recreating venvs when migrating to execution environments.
+#   This also works with old installations of Tower (Ansible 2.9) where
+#   "ansible-galaxy collection list" wasn't included yet.
+
+- name: Show Ansible version info
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: Get Python version
+      ansible.builtin.command: python --version
+      changed_when: false
+      register: python
+    - name: Show Python version
+      ansible.builtin.debug:
+        var: python.stdout_lines
+
+    - name: Get PIP packages
+      ansible.builtin.command: pip freeze
+      changed_when: false
+      register: pip
+    - name: Show PIP packages
+      ansible.builtin.debug:
+        var: pip.stdout_lines
+
+    - name: Get Ansible version
+      ansible.builtin.command: ansible --version
+      changed_when: false
+      register: ver
+    - name: Show Ansible version
+      ansible.builtin.debug:
+        var: ver.stdout_lines
+
+    - name: Get Ansible collection info (via ansible-galaxy)
+      ansible.builtin.command: ansible-galaxy collection list
+      changed_when: false
+      failed_when: false
+      register: collection1
+    - name: Show Ansible collection info (ansible > 2.9)
+      ansible.builtin.debug:
+        var: collection1.stdout_lines
+      when: 'collection1.rc == 0'
+
+    - name: Get Ansible collection info (via python script)
+      ansible.builtin.command: python
+      ##########################################################################
+      # From an offical Red Hat Ansible dev:
+      #   https://github.com/bcoca/std/blob/devel/get_collection_info.py
+      ##########################################################################
+      args:
+        stdin: |
+          #!/usr/bin/env python
+
+          import os
+          import sys
+          import warnings
+
+          # if you dont have ansible, how are you using collections??
+          from ansible import constants as C
+
+          try:
+              C.COLLECTIONS_SCAN_SYS_PATH
+              exit("newer Ansible, use: ansible-galaxy collections list")
+          except AttributeError:
+              pass
+
+          where = C.COLLECTIONS_PATHS
+
+          found = {}
+
+          for path in where:
+              collpath = os.path.join(path, 'ansible_collections')
+              if os.path.exists(collpath):
+                  for ns in os.listdir(collpath):
+                      nsp = os.path.join(collpath, ns)
+                      if os.path.isdir(nsp):
+                          for collection in os.listdir(nsp):
+                              collp = os.path.join(nsp, collection)
+                              if os.path.isdir(collp):
+                                  info = {'path': collp}
+                                  cname = '.'.join([ns, collection])
+                                  if cname in found:
+                                      warnings.warn("Skipping duplicate %s in %s" % (cname, collp))
+                                  found[cname] = info
+
+          for k in found.keys():
+              print(k, found[k]['path'])
+      ##########################################################################
+      changed_when: false
+      register: collection2
+      when: 'collection1.rc != 0'
+
+    - name: Show Ansible collection info (ansible <= 2.9)
+      ansible.builtin.debug:
+        var: collection2.stdout_lines
+      when: 'collection1.rc != 0'
