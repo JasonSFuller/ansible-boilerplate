@@ -1,2 +1,3 @@
-# ansible-infra-boilerplate
-Boilerplate code for Ansible Automation Platform (AAP) installations
+# ansible-boilerplate
+
+Boilerplate code for Ansible and Ansible Automation Platform (AAP).
