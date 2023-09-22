@@ -1,9 +1,6 @@
 # USAGE:
 #   ansible-playbook -i server.example.com, gather-facts.yml
 #
-# NOTE:
-#   The comma is important when providing a single host as the inventory
-#
 # PURPOSE:
 #   By default, 'gather_facts:' is set to 'true' and causes Ansible to search
 #   a host for common information from the OS.  This provides a CONSISTENT
@@ -28,7 +25,7 @@
 #   Ubuntu 20.04, the package name is "apache."  Using the ansible_facts vars,
 #   you can write a playbook that matches the correct name for the distro.
 
-- name: Gather and display facts from a host
+- name: Gather and display facts
   hosts: all
 
   tasks:

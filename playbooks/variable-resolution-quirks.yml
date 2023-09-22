@@ -23,7 +23,7 @@
     # However, this won't resolve because the 'item' var from the 'with_items:'
     # loop is not yet defined, so the task name will be printed literally:
     #   TASK [Variable foo={{ foo }} item={{ item }}]...
-    # And ansible-lint will complain:
+    # Also, ansible-lint will complain:
     #   WARNING  Listing 1 violation(s) that are fatal
     #   name[template]: Jinja templates should only be at the end of 'name'
 
