@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# Install the latest open source Ansible via pip.
+# Install the latest open source Ansible (and tools) via pip.
 
 # Pre-flight
 function error { echo "ERROR: $*" >&2; exit 1; }
+if [[ "$(id -u)" == '0' ]]; then error "do not run as root"; fi
 if [[ ! -f /etc/os-release ]]; then error "missing /etc/os-release"; fi
 # shellcheck source=/dev/null
 source /etc/os-release
