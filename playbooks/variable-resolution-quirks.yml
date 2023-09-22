@@ -1,0 +1,36 @@
+# USAGE:
+#   ansible-playbook variable-resolution-quirks.yml
+
+- name: Variable resolution quirks
+  hosts: localhost
+  gather_facts: false
+  vars:
+    foo: bar
+  tasks:
+
+    # The var in the 'name:' option will resolve and output as expected, since
+    # the 'foo' var is already defined:
+    #   TASK [Variable foo=bar]...
+
+    - name: "Variable foo={{ foo }}"
+      ansible.builtin.debug:
+        var: item
+      with_items:
+        - one
+        - two
+        - three
+
+    # However, this won't resolve because the 'item' var from the 'with_items:'
+    # loop is not yet defined, so the task name will be printed literally:
+    #   TASK [Variable foo={{ foo }} item={{ item }}]...
+    # And ansible-lint will complain:
+    #   WARNING  Listing 1 violation(s) that are fatal
+    #   name[template]: Jinja templates should only be at the end of 'name'
+
+    - name: "Variable foo={{ foo }} item={{ item }}"
+      ansible.builtin.debug:
+        var: item
+      with_items:
+        - one
+        - two
+        - three
