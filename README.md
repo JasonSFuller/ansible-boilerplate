@@ -1,10 +1,13 @@
 # Ansible boilerplate
 
-Boilerplate and info for Ansible and Ansible Automation Platform (AAP)
+Boilerplate, docs, and info for Ansible and Ansible Automation Platform (AAP)
 
-## Documentation and helpful links
+## Official docs and helpful links
 
-- [Official Ansible docs](https://docs.ansible.com/ansible/latest/)
+- [Ansible](https://docs.ansible.com/ansible/latest/)
+- [Ansible lint](https://ansible.readthedocs.io/projects/lint/usage/)
+- [Ansible navigator](https://ansible.readthedocs.io/projects/navigator/settings/)
+- [Ansible builder](https://ansible.readthedocs.io/projects/builder/en/stable/definition/)
 - [Red Hat CoP](https://redhat-cop.github.io/) > [Good Practices for Ansible](https://redhat-cop.github.io/automation-good-practices/)
 
 ### References
