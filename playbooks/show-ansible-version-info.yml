@@ -16,10 +16,26 @@
     - name: Get Python version
       ansible.builtin.command: python --version
       changed_when: false
+      failed_when: false
       register: python
     - name: Show Python version
       ansible.builtin.debug:
         var: python.stdout_lines
+
+    - name: Get Python 3 version
+      ansible.builtin.command: python3 --version
+      changed_when: false
+      failed_when: false
+      register: python3
+    - name: Show Python version
+      ansible.builtin.debug:
+        var: python3.stdout_lines
+
+    - name: Verify a version of Python was found
+      ansible.builtin.assert:
+        that:
+          - python.rc == 0 or python3.rc == 0
+        fail_msg: "Python could not be found"
 
     - name: Get PIP packages
       ansible.builtin.command: pip freeze
