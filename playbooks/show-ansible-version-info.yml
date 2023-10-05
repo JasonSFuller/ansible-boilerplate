@@ -40,10 +40,26 @@
     - name: Get PIP packages
       ansible.builtin.command: pip freeze
       changed_when: false
+      failed_when: false
       register: pip
     - name: Show PIP packages
       ansible.builtin.debug:
         var: pip.stdout_lines
+
+    - name: Get PIP 3 packages
+      ansible.builtin.command: pip3 freeze
+      changed_when: false
+      failed_when: false
+      register: pip3
+    - name: Show PIP 3 packages
+      ansible.builtin.debug:
+        var: pip3.stdout_lines
+
+    - name: Verify a version of PIP was found
+      ansible.builtin.assert:
+        that:
+          - pip.rc == 0 or pip3.rc == 0
+        fail_msg: "PIP could not be found"
 
     - name: Get Ansible version
       ansible.builtin.command: ansible --version
