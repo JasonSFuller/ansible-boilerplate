@@ -13,10 +13,13 @@ install -m 0755 -d "$HOME/.local/bin" && export PATH="$PATH:$_"
 # Install Python3 prerequisites and Podman (or Docker)
 case "$ID_LIKE" in
   fedora) # RHEL, CentOS, etc
-    sudo  dnf install -y python3{,-pip,-wheel,-setuptools} podman ;;
+    sudo \
+      dnf     install -y python3{,-pip,-wheel,-setuptools} podman \
+      || error "dnf install failed" ;;
   debian) # Ubuntu, Pop_OS, Kali, Mint, etc
     sudo DEBIAN_FRONTEND=noninteractive \
-      apt-get install -y python3{,-pip,-wheel,-setuptools} docker.io
+      apt-get install -y python3{,-pip,-wheel,-setuptools} docker.io \
+      || error "apt install failed"
     sudo systemctl enable --now docker ;;
   *)
     error "unknown distro (ID_LIKE=$ID_LIKE)" ;;
