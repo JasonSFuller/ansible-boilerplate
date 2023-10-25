@@ -1,6 +1,7 @@
 # USAGE:
-#   ansible-playbook -i server.example.com, gather-facts.yml
-#
+#   ansible-playbook playbooks/gather-facts.yml
+#   ansible-navigator run playbooks/gather-facts.yml
+
 # PURPOSE:
 #   By default, 'gather_facts:' is set to 'true' and causes Ansible to search
 #   a host for common information from the OS.  This provides a CONSISTENT
@@ -26,7 +27,7 @@
 #   you can write a playbook that matches the correct name for the distro.
 
 - name: Gather and display facts
-  hosts: all
+  hosts: localhost, servers
 
   tasks:
 

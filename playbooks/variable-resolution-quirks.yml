@@ -1,5 +1,6 @@
 # USAGE:
-#   ansible-playbook variable-resolution-quirks.yml
+#   ansible-playbook playbooks/variable-resolution-quirks.yml
+#   ansible-navigator run playbooks/variable-resolution-quirks.yml
 
 - name: Variable resolution quirks
   hosts: localhost

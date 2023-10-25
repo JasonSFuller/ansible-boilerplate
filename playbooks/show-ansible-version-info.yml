@@ -1,6 +1,7 @@
 # USAGE:
-#   ansible-playbook -i server.example.com, show-ansible-version-info.yml
-#
+#   ansible-playbook playbooks/show-ansible-version-info.yml
+#   ansible-navigator run playbooks/show-ansible-version-info.yml
+
 # PURPOSE:
 #   Show version info for Python, PIP packages, Ansible, and collection info.
 #   It's useful for recreating venvs when migrating to execution environments.
@@ -8,7 +9,7 @@
 #   "ansible-galaxy collection list" wasn't included yet.
 
 - name: Show Ansible version info
-  hosts: all
+  hosts: localhost, servers
   gather_facts: false
 
   tasks:

@@ -1,6 +1,7 @@
 # USAGE:
-#   ansible-playbook hello-world.yml
-#
+#   ansible-playbook playbooks/hello-world.yml
+#   ansible-navigator run playbooks/hello-world.yml
+
 # PURPOSE:
 #   A simple playbook to test your Ansible installation.
 
