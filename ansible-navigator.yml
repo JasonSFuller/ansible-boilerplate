@@ -9,7 +9,8 @@ ansible-navigator:
     osc4: false
   execution-environment:
     container-engine: podman
-    image: quay.io/ansible/awx-ee:latest
+    #image: quay.io/ansible/awx-ee:latest
+    image: localhost/my-ee:latest
     pull:
       arguments:
         - --tls-verify=false
