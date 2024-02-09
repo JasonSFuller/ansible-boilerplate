@@ -1,0 +1,15 @@
+# USAGE:
+#   export MY_AUTH_TOKEN=my_secret
+#   ansible-playbook environment-variable-required.yml
+
+- name: Example - require a non-empty environment variable
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    my_token: "{{ lookup('ansible.builtin.env', 'MY_AUTH_TOKEN') | default(undef(hint='HINT: MY_AUTH_TOKEN env var not set'), true) }}"
+
+  tasks:
+    - name: Print MY_AUTH_TOKEN
+      ansible.builtin.debug:
+        msg: "MY_AUTH_TOKEN = '{{ MY_AUTH_TOKEN }}'"
