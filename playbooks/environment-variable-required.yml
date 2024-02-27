@@ -1,7 +1,12 @@
 # USAGE:
-#   ansible-playbook environment-variable-required.yml # This will FAIL (expected).
+#   # This should fail.
+#   ansible-playbook environment-variable-required.yml
+#   ansible-navigator run playbooks/environment-variable-required.yml
+#
+#   # This should succeed.
 #   export MY_AUTH_TOKEN=my_secret
-#   ansible-playbook environment-variable-required.yml # This will succeed.
+#   ansible-playbook environment-variable-required.yml
+#   ansible-navigator run playbooks/environment-variable-required.yml --penv MY_AUTH_TOKEN
 
 # PURPOSE:
 #   Checking for shell (Bash) environment variables can be somewhat difficult,
