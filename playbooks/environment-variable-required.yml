@@ -1,15 +1,39 @@
 # USAGE:
+#   ansible-playbook environment-variable-required.yml # This will FAIL (expected).
 #   export MY_AUTH_TOKEN=my_secret
-#   ansible-playbook environment-variable-required.yml
+#   ansible-playbook environment-variable-required.yml # This will succeed.
+
+# PURPOSE:
+#   Checking for shell (Bash) environment variables can be somewhat difficult,
+#   since null values CANNOT be stored in a variable or sent as an _unescaped_
+#   argument--though you CAN escape it or pass nulls via pipes or files.  In
+#   other words, if you check for a shell variable that does not exist, you'll
+#   get an empty string, i.e. NOT null.
+
+#   Since environment variables can be useful as an input for Ansible playbooks,
+#   properly checking for their existence (and value) is helpful.
 
 - name: Example - require a non-empty environment variable
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
-    my_token: "{{ lookup('ansible.builtin.env', 'MY_AUTH_TOKEN') | default(undef(hint='HINT: MY_AUTH_TOKEN env var not set'), true) }}"
+    my_token: "{{ lookup('ansible.builtin.env', 'MY_AUTH_TOKEN') }}"
+
+    ### For a more complex version, but as a one-liner:
+    # my_token: "{{ lookup('ansible.builtin.env', 'MY_AUTH_TOKEN') | default(undef(), true) }}"
+    ### Or, if using ansible-core >= 2.13, then this simplified form also works:
+    # my_token: "{{ lookup('ansible.builtin.env', 'MY_AUTH_TOKEN', default=Undefined) }}"
 
   tasks:
-    - name: Print MY_AUTH_TOKEN
+    # However, this method gives the user a more descriptive and readable error.
+    - name: Check environment variable 'my_token' for a non-empty value
+      ansible.builtin.assert:
+        that:
+          - my_token is defined
+          - my_token | length > 0
+        fail_msg: "ERROR: env var 'MY_AUTH_TOKEN' is missing or empty"
+
+    - name: Print my_token
       ansible.builtin.debug:
-        msg: "MY_AUTH_TOKEN = '{{ MY_AUTH_TOKEN }}'"
+        msg: "env var MY_AUTH_TOKEN ==> my_token = '{{ my_token }}'"
