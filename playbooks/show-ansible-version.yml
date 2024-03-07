@@ -1,0 +1,21 @@
+# USAGE:
+#   ansible-playbook playbooks/show-ansible-version.yml
+#   ansible-navigator run playbooks/show-ansible-version.yml
+
+# PURPOSE:
+#   Show version info for Ansible.
+
+- name: Show Ansible version info
+  hosts: localhost, servers
+  gather_facts: false
+
+  tasks:
+
+    - name: Get Ansible version
+      ansible.builtin.command: ansible --version
+      changed_when: false
+      register: ver
+    - name: Show Ansible version
+      ansible.builtin.debug:
+        var: ver.stdout_lines
+
