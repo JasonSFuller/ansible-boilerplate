@@ -1,0 +1,8 @@
+---
+ansible-navigator:
+  logging:
+    file: .ansible/ansible-navigator.log
+    level: critical
+  mode: stdout
+  playbook-artifact:
+    save-as: .ansible/{playbook_name}-artifact-{time_stamp}.json

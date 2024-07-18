@@ -1,0 +1,28 @@
+---
+
+# <html>
+# <head><title>Index of /backups/dns/example.com/</title></head>
+# <body>
+# <h1>Index of /backups/dns/example.com/</h1><hr><pre><a href="../">../</a>
+# <a href="example.com.2024-07-11T15%3A53%3A38Z.json">example.com.2024-07-11T15:53:38Z.json</a>              11-Jul-2024 15:53                 622
+# <a href="example.com.2024-07-11T16%3A54%3A16Z.json">example.com.2024-07-11T16:54:16Z.json</a>              11-Jul-2024 16:54                 622
+# <a href="example.com.2024-07-11T16%3A54%3A33Z.json">example.com.2024-07-11T16:54:33Z.json</a>              11-Jul-2024 16:54                 622
+# <a href="example.com.2024-07-11T16%3A54%3A48Z.json">example.com.2024-07-11T16:54:48Z.json</a>              11-Jul-2024 16:54                 622
+# <a href="example.com.2024-07-11T16%3A58%3A35Z.json">example.com.2024-07-11T16:58:35Z.json</a>              11-Jul-2024 16:58                 622
+# </pre><hr></body>
+# </html>
+
+- example: '<a href="example.com.2024-07-11T15%3A53%3A38Z.json">example.com.2024-07-11T15:53:38Z.json</a>              11-Jul-2024 15:53                 622'
+  getval: |
+    (?x)                                                # free-spacing
+    \<a\s+href="(?P<link>.*?)"\>                        # file link
+    (?P<name>.*?)\</a\>\s+                              # file name
+    (?P<datetime>\d{2}\-...\-\d{4}\s+\d{2}:\d{2})\s+    # file date/time
+    (?P<size>\d+)                                       # file size
+  result:
+    "{{ name }}":
+      name: "{{ name }}"
+      link: "{{ link }}"
+      datetime: "{{ datetime }}"
+      size: "{{ size }}"
+  shared: true

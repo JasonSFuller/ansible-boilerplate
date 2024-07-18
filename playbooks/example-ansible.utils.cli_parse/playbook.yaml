@@ -1,0 +1,36 @@
+- name: ansible.utils.cli_parse example
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Set facts
+      ansible.builtin.set_fact:
+        # webdav_username: 'my_username'
+        # webdav_password: 'my_password'
+        my_html:
+          content: "{{ lookup('file', 'index.html') }}"
+
+    # - name: Get index from WebDAV server
+    #   ansible.builtin.uri:
+    #     url: "https://webdav.example.com/backups/dns/example.com/"
+    #     method: GET
+    #     url_username: "{{ webdav_username }}"
+    #     url_password: "{{ webdav_password }}"
+    #     return_content: true
+    #   register: my_html
+
+    - name: Debug - my_html var
+      ansible.builtin.debug:
+        var: my_html.content
+
+    - name: Parse HTML
+      ansible.utils.cli_parse:
+        text: "{{ my_html.content }}"
+        parser:
+          name: ansible.netcommon.native
+          template_path: template.yaml
+        set_fact: my_out
+
+    - name: Debug - my_out var
+      ansible.builtin.debug:
+        var: my_out
