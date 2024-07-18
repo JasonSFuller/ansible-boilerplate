@@ -15,7 +15,7 @@ Clone this repo and change directory to this example.
 
 ```shell
 git clone https://github.com/JasonSFuller/ansible-boilerplate
-cd playbooks/example-ansible.utils.cli_parse
+cd ansible-boilerplate/playbooks/example-ansible.utils.cli_parse
 ```
 
 Set up a Python virtual environment for Ansible, activate it, and then
