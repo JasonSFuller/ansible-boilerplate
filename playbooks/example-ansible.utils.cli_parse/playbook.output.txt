@@ -1,0 +1,60 @@
+$ ansible-navigator run playbook.yaml
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [ansible.utils.cli_parse example] *****************************************
+
+TASK [Set facts] ***************************************************************
+ok: [localhost]
+
+TASK [Debug - my_html var] *****************************************************
+ok: [localhost] => {
+    "my_html.content": "<html>\n<head><title>Index of /backups/dns/example.com/</title></head>\n<body>\n<h1>Index of /backups/dns/example.com/</h1><hr><pre><a href=\"../\">../</a>\n<a href=\"example.com.2024-07-11T15%3A53%3A38Z.json\">example.com.2024-07-11T15:53:38Z.json</a>              11-Jul-2024 15:53                 622\n<a href=\"example.com.2024-07-11T16%3A54%3A16Z.json\">example.com.2024-07-11T16:54:16Z.json</a>              11-Jul-2024 16:54                 622\n<a href=\"example.com.2024-07-11T16%3A54%3A33Z.json\">example.com.2024-07-11T16:54:33Z.json</a>              11-Jul-2024 16:54                 622\n<a href=\"example.com.2024-07-11T16%3A54%3A48Z.json\">example.com.2024-07-11T16:54:48Z.json</a>              11-Jul-2024 16:54                 622\n<a href=\"example.com.2024-07-11T16%3A58%3A35Z.json\">example.com.2024-07-11T16:58:35Z.json</a>              11-Jul-2024 16:58                 622\n</pre><hr></body>\n</html>"
+}
+
+TASK [Parse HTML] **************************************************************
+ok: [localhost]
+
+TASK [Debug - my_out var] ******************************************************
+ok: [localhost] => {
+    "my_out": {
+        "dirname": "example.com",
+        "entries": [
+            {
+                "datetime": "11-Jul-2024 15:53",
+                "link": "example.com.2024-07-11T15%3A53%3A38Z.json",
+                "name": "example.com.2024-07-11T15:53:38Z.json",
+                "size": 622
+            },
+            {
+                "datetime": "11-Jul-2024 16:54",
+                "link": "example.com.2024-07-11T16%3A54%3A16Z.json",
+                "name": "example.com.2024-07-11T16:54:16Z.json",
+                "size": 622
+            },
+            {
+                "datetime": "11-Jul-2024 16:54",
+                "link": "example.com.2024-07-11T16%3A54%3A33Z.json",
+                "name": "example.com.2024-07-11T16:54:33Z.json",
+                "size": 622
+            },
+            {
+                "datetime": "11-Jul-2024 16:54",
+                "link": "example.com.2024-07-11T16%3A54%3A48Z.json",
+                "name": "example.com.2024-07-11T16:54:48Z.json",
+                "size": 622
+            },
+            {
+                "datetime": "11-Jul-2024 16:58",
+                "link": "example.com.2024-07-11T16%3A58%3A35Z.json",
+                "name": "example.com.2024-07-11T16:58:35Z.json",
+                "size": 622
+            }
+        ],
+        "path": "/backups/dns/example.com/"
+    }
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

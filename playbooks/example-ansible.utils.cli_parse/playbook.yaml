@@ -1,3 +1,11 @@
+# PURPOSE:  Show example usage of ansible.utils.cli_parse for converting output
+#   into structured data that is more easily consumable in Ansible.
+
+# IMPORTANT (for this example):  Normally, you'd use the PROPFIND HTTP verb to
+#   query a WebDAV server for file properties, but (at the time of writing) the
+#   built-in NGINX WebDAV module only supports:  PUT DELETE MKCOL COPY MOVE.
+#   Source:  https://nginx.org/en/docs/http/ngx_http_dav_module.html
+
 - name: ansible.utils.cli_parse example
   hosts: localhost
   gather_facts: false

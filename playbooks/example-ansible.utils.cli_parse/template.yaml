@@ -12,17 +12,22 @@
 # </pre><hr></body>
 # </html>
 
+- example: '<h1>Index of /backups/dns/example.com/</h1>'
+  getval: '<h1>Index of (?P<path>.*/(?P<dirname>.*?)/)</h1>'
+  result:
+    dirname: "{{ dirname }}"
+    path: "{{ path }}"
+
 - example: '<a href="example.com.2024-07-11T15%3A53%3A38Z.json">example.com.2024-07-11T15:53:38Z.json</a>              11-Jul-2024 15:53                 622'
   getval: |
     (?x)                                                # free-spacing
     \<a\s+href="(?P<link>.*?)"\>                        # file link
     (?P<name>.*?)\</a\>\s+                              # file name
     (?P<datetime>\d{2}\-...\-\d{4}\s+\d{2}:\d{2})\s+    # file date/time
-    (?P<size>\d+)                                       # file size
+    (?P<size>\d+|\-)                                    # file size
   result:
-    "{{ name }}":
-      name: "{{ name }}"
-      link: "{{ link }}"
-      datetime: "{{ datetime }}"
-      size: "{{ size }}"
-  shared: true
+    entries:
+      - name: "{{ name }}"
+        link: "{{ link }}"
+        datetime: "{{ datetime }}"
+        size: "{{ size }}"

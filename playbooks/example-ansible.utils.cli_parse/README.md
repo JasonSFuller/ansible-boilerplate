@@ -2,8 +2,7 @@
 
 ## Pre-flight
 
-> [!NOTE]
-> This was tested on CentOS Stream 9.
+> [!NOTE] This was tested on CentOS Stream 9.
 
 Install a few prerequisite OS packages.
 
