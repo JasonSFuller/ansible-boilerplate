@@ -1,0 +1,19 @@
+// https://github.com/ansible/ansible-dev-tools/blob/main/.devcontainer/docker/devcontainer.json
+// commit: b7825c9022f2dc32152b596cec7eb66f8970bd26
+{
+  "name": "ansible-dev-container-docker",
+  "image": "ghcr.io/ansible/community-ansible-dev-tools:latest",
+  "containerUser": "root",
+  "runArgs": [
+    "--privileged",
+    "--device",
+    "/dev/fuse",
+    "--hostname=ansible-dev-container"
+  ],
+  "updateRemoteUserUID": true,
+  "customizations": {
+    "vscode": {
+      "extensions": ["redhat.ansible"]
+    }
+  }
+}
